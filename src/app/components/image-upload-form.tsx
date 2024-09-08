@@ -15,13 +15,29 @@ import {
   FormMessage,
 } from '~/components/ui/form'
 import { Input } from '~/components/ui/input'
-import { API_ENDPOINT } from '~/lib/configs'
+import { API_ENDPOINT, tmp } from '~/lib/configs'
 import { getImageData } from '~/lib/get-image-data'
 
 import ImagePreview from './image-preview'
 
+// APIレスポンスの型定義
+interface ApiResponse {
+  data: {
+    image: string
+    text: string
+  }
+}
+
+// リクエストの引数の型定義
+interface RequestArgs {
+  image: string
+}
+
 // API呼び出し関数
-async function sendRequest(url: string, { arg }: { arg: { image: string } }) {
+async function sendRequest(
+  url: string,
+  { arg }: { arg: RequestArgs },
+): Promise<ApiResponse> {
   console.log('APIリクエスト:', arg)
 
   const response = await fetch(url, {
@@ -45,10 +61,12 @@ export default function ImageUploadForm() {
   const fileInputRef = useRef<HTMLInputElement>(null)
   const form = useForm()
 
-  const { trigger, isMutating, error, data } = useSWRMutation(
-    API_ENDPOINT,
-    sendRequest,
-  )
+  const { trigger, isMutating, error, data } = useSWRMutation<
+    ApiResponse,
+    Error,
+    string,
+    RequestArgs
+  >(API_ENDPOINT, sendRequest)
 
   const onSubmit = async (formData: any) => {
     if (!base64Image) {
@@ -126,10 +144,21 @@ export default function ImageUploadForm() {
       )}
       {data && (
         <div className="mt-4">
-          <h2 className="text-xl font-bold">アップロード成功！</h2>
-          <pre className="mt-2 rounded-lg bg-gray-100 p-4">
-            {JSON.stringify(data, null, 2)}
-          </pre>
+          <div className="mt-2 space-y-4">
+            <div>
+              <h3 className="text-lg font-semibold">生成された画像：</h3>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={`data:image/jpeg;base64,${data.data.image}`}
+                alt="生成された画像"
+                className="mt-2 h-auto max-w-full rounded-lg shadow-md"
+              />
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold">画像の説明：</h3>
+              <p className="mt-2 p-4">{data.data.text}</p>
+            </div>
+          </div>
         </div>
       )}
     </>
