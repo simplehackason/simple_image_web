@@ -135,7 +135,7 @@ export default function ImageUploadForm() {
                       type="button"
                       size="lg"
                       variant="outline"
-                      className="w-full py-9 text-lg font-semibold"
+                      className="w-full py-9 text-lg font-semibold text-white"
                       onClick={triggerFileSelection}
                     >
                       画像をアップロード <FileDownIcon className="ml-2" />
