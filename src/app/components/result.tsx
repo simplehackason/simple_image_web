@@ -10,7 +10,9 @@ export default function UploadImageResult({ data }: { data?: ApiResponse }) {
   const scrollRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    scrollRef.current?.scrollIntoView({ behavior: 'smooth' })
+    setTimeout(() => {
+      scrollRef.current?.scrollIntoView({ behavior: 'smooth' })
+    }, 0)
   }, [data])
 
   if (!data) return null
