@@ -1,9 +1,18 @@
+'use client'
+
 import { CheckIcon } from 'lucide-react'
+import { useEffect, useRef } from 'react'
 
 import { Separator } from '~/components/ui/separator'
 import type { ApiResponse } from '~/lib/types'
 
 export default function UploadImageResult({ data }: { data?: ApiResponse }) {
+  const scrollRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    scrollRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }, [data])
+
   if (!data) return null
 
   return (
@@ -33,7 +42,7 @@ export default function UploadImageResult({ data }: { data?: ApiResponse }) {
             ))}
           </ul>
         </div>
-        <div>
+        <div ref={scrollRef}>
           <h3 className="mb-3 text-sm font-semibold">説明</h3>
           <p className="text-lg">{data.data.description}</p>
         </div>

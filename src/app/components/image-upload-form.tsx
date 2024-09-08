@@ -146,6 +146,7 @@ export default function ImageUploadForm() {
               </FormItem>
             )}
           />
+          <ImagePreview preview={preview} />
           <Button
             type="submit"
             className="w-full py-6 text-lg font-semibold"
@@ -155,7 +156,6 @@ export default function ImageUploadForm() {
           </Button>
         </form>
       </Form>
-      <ImagePreview preview={preview} />
       {error && (
         <div className="mt-4 text-red-500">エラー: {error.message}</div>
       )}
