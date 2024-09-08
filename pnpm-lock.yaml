@@ -8,12 +8,6 @@ importers:
 
   .:
     dependencies:
-      '@conform-to/react':
-        specifier: ^1.1.5
-        version: 1.1.5(react@19.0.0-rc-f994737d14-20240522)
-      '@conform-to/zod':
-        specifier: ^1.1.5
-        version: 1.1.5(zod@3.23.8)
       '@hookform/resolvers':
         specifier: ^3.9.0
         version: 3.9.0(react-hook-form@7.53.0(react@19.0.0-rc-f994737d14-20240522))
@@ -59,6 +53,9 @@ importers:
       react-hook-form:
         specifier: ^7.53.0
         version: 7.53.0(react@19.0.0-rc-f994737d14-20240522)
+      swr:
+        specifier: ^2.2.5
+        version: 2.2.5(react@19.0.0-rc-f994737d14-20240522)
       tailwind-merge:
         specifier: ^2.5.2
         version: 2.5.2
@@ -210,19 +207,6 @@ packages:
   '@commitlint/types@19.0.3':
     resolution: {integrity: sha512-tpyc+7i6bPG9mvaBbtKUeghfyZSDgWquIDfMgqYtTbmZ9Y9VzEm2je9EYcQ0aoz5o7NvGS+rcDec93yO08MHYA==}
     engines: {node: '>=v18'}
-
-  '@conform-to/dom@1.1.5':
-    resolution: {integrity: sha512-tWI3YxWvDaZFSl4QN8Y0WbgBxsWEfcTrSMtKic3YTt/hGVJXjQ8qURBdsJXudzJ38zwAr5GhpLWmyI6BbG9+gA==}
-
-  '@conform-to/react@1.1.5':
-    resolution: {integrity: sha512-QyzJ8SIazHmez7qkMffypICDBwU+Ht5TPe+C4MTP2dro0N0Hu6LsfLq7mMWFJyAJ7IYxT1BMzfoFj28jheIIOw==}
-    peerDependencies:
-      react: '>=18'
-
-  '@conform-to/zod@1.1.5':
-    resolution: {integrity: sha512-ho/742wgfTWf2u5tKo4GT88xcKcvTOCDPOi4o1WEmePPmJNP5ezeMQSKSdKdS0rFinZl9ZTH8gV5FQUNPHAA7A==}
-    peerDependencies:
-      zod: ^3.21.0
 
   '@emnapi/runtime@1.2.0':
     resolution: {integrity: sha512-bV21/9LQmcQeCPEg3BDFtvwL6cwiTMksYNWQQ4KOxCZikEGalWtenoZ0wCiukJINlGCIi2KXx01g4FoH/LxpzQ==}
@@ -2569,6 +2553,11 @@ packages:
     resolution: {integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==}
     engines: {node: '>= 0.4'}
 
+  swr@2.2.5:
+    resolution: {integrity: sha512-QtxqyclFeAsxEUeZIYmsaQ0UjimSq1RZ9Un7I68/0ClKK/U3LoyQunwkQfJZr2fc22DfIXLNDc2wFyTEikCUpg==}
+    peerDependencies:
+      react: ^16.11.0 || ^17.0.0 || ^18.0.0
+
   tailwind-merge@2.5.2:
     resolution: {integrity: sha512-kjEBm+pvD+6eAwzJL2Bi+02/9LFLal1Gs61+QB7HvTfQQ0aXwC5LGT8PEt1gS0CWKktKe6ysPTAy3cBC5MeiIg==}
 
@@ -2663,6 +2652,11 @@ packages:
 
   uri-js@4.4.1:
     resolution: {integrity: sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==}
+
+  use-sync-external-store@1.2.2:
+    resolution: {integrity: sha512-PElTlVMwpblvbNqQ82d2n6RjStvdSoNe9FG28kNfz3WiXilJm4DdNkEzRhCZuIDwY8U08WVihhGR5iRqAwfDiw==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
 
   util-deprecate@1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
@@ -2869,18 +2863,6 @@ snapshots:
     dependencies:
       '@types/conventional-commits-parser': 5.0.0
       chalk: 5.3.0
-
-  '@conform-to/dom@1.1.5': {}
-
-  '@conform-to/react@1.1.5(react@19.0.0-rc-f994737d14-20240522)':
-    dependencies:
-      '@conform-to/dom': 1.1.5
-      react: 19.0.0-rc-f994737d14-20240522
-
-  '@conform-to/zod@1.1.5(zod@3.23.8)':
-    dependencies:
-      '@conform-to/dom': 1.1.5
-      zod: 3.23.8
 
   '@emnapi/runtime@1.2.0':
     dependencies:
@@ -5325,6 +5307,12 @@ snapshots:
 
   supports-preserve-symlinks-flag@1.0.0: {}
 
+  swr@2.2.5(react@19.0.0-rc-f994737d14-20240522):
+    dependencies:
+      client-only: 0.0.1
+      react: 19.0.0-rc-f994737d14-20240522
+      use-sync-external-store: 1.2.2(react@19.0.0-rc-f994737d14-20240522)
+
   tailwind-merge@2.5.2: {}
 
   tailwindcss-animate@1.0.7(tailwindcss@3.4.10):
@@ -5447,6 +5435,10 @@ snapshots:
   uri-js@4.4.1:
     dependencies:
       punycode: 2.3.1
+
+  use-sync-external-store@1.2.2(react@19.0.0-rc-f994737d14-20240522):
+    dependencies:
+      react: 19.0.0-rc-f994737d14-20240522
 
   util-deprecate@1.0.2: {}
 
