@@ -43,7 +43,6 @@ export default function ImageUploadForm() {
   const [preview, setPreview] = useState('')
   const [base64Image, setBase64Image] = useState('')
   const fileInputRef = useRef<HTMLInputElement>(null)
-  const cameraInputRef = useRef<HTMLInputElement>(null)
   const form = useForm()
 
   const { trigger, isMutating, error, data } = useSWRMutation(
@@ -84,10 +83,6 @@ export default function ImageUploadForm() {
     fileInputRef.current?.click()
   }
 
-  const triggerCameraCapture = () => {
-    cameraInputRef.current?.click()
-  }
-
   return (
     <>
       <Form {...form}>
@@ -108,18 +103,6 @@ export default function ImageUploadForm() {
                       className="hidden"
                       ref={fileInputRef}
                     />
-                    <Input
-                      type="file"
-                      accept="image/*"
-                      capture="environment"
-                      {...field}
-                      onChange={handleImageCapture}
-                      className="hidden"
-                      ref={cameraInputRef}
-                    />
-                    <Button type="button" onClick={triggerCameraCapture}>
-                      カメラで撮影
-                    </Button>
                     <Button type="button" onClick={triggerFileSelection}>
                       画像を選択
                     </Button>
