@@ -1,7 +1,7 @@
 export default function Home() {
   return (
-    <div>
+    <article>
       <h1>Simple Image</h1>
-    </div>
+    </article>
   )
 }
