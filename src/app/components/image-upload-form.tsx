@@ -1,5 +1,6 @@
 'use client'
 
+import { FileDownIcon } from 'lucide-react'
 import { useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import useSWRMutation from 'swr/mutation'
@@ -8,29 +9,29 @@ import { Button } from '~/components/ui/button'
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from '~/components/ui/form'
 import { Input } from '~/components/ui/input'
-import { API_ENDPOINT, tmp } from '~/lib/configs'
+import { API_ENDPOINT } from '~/lib/configs'
 import { getImageData } from '~/lib/get-image-data'
+import type { ApiResponse } from '~/lib/types'
 
 import ImagePreview from './image-preview'
-
-// APIレスポンスの型定義
-interface ApiResponse {
-  data: {
-    image: string
-    text: string
-  }
-}
+import UploadImageResult from './result'
 
 // リクエストの引数の型定義
 interface RequestArgs {
   image: string
+}
+
+const tmp = {
+  data: {
+    image: 'image',
+    object_names: ['object1', 'object2'],
+    description: 'description',
+  },
 }
 
 // API呼び出し関数
@@ -40,19 +41,29 @@ async function sendRequest(
 ): Promise<ApiResponse> {
   console.log('APIリクエスト:', arg)
 
-  const response = await fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(arg),
-  })
+  // const response = await fetch(url, {
+  //   method: 'POST',
+  //   headers: {
+  //     'Content-Type': 'application/json',
+  //   },
+  //   body: JSON.stringify(arg),
+  // })
 
-  if (!response.ok) {
-    throw new Error('APIリクエストに失敗しました')
+  // if (!response.ok) {
+  //   throw new Error('APIリクエストに失敗しました')
+  // }
+
+  const tmp_data = {
+    data: {
+      image: arg.image,
+      object_names: ['object1', 'object2'],
+      description: 'description',
+    },
   }
 
-  return response.json()
+  return tmp_data
+
+  // return response.json()
 }
 
 export default function ImageUploadForm() {
@@ -110,7 +121,6 @@ export default function ImageUploadForm() {
             name="picture"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>画像アップロード</FormLabel>
                 <FormControl>
                   <div className="space-y-2">
                     <Input
@@ -121,19 +131,26 @@ export default function ImageUploadForm() {
                       className="hidden"
                       ref={fileInputRef}
                     />
-                    <Button type="button" onClick={triggerFileSelection}>
-                      画像を選択
+                    <Button
+                      type="button"
+                      size="lg"
+                      variant="outline"
+                      className="w-full py-9 text-lg font-semibold"
+                      onClick={triggerFileSelection}
+                    >
+                      画像をアップロード <FileDownIcon className="ml-2" />
                     </Button>
                   </div>
                 </FormControl>
-                <FormDescription>
-                  カメラで撮影するか、画像ファイルを選択してください
-                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
           />
-          <Button type="submit" disabled={isMutating || !base64Image}>
+          <Button
+            type="submit"
+            className="w-full py-6 text-lg font-semibold"
+            disabled={isMutating || !base64Image}
+          >
             {isMutating ? '送信中...' : '送信'}
           </Button>
         </form>
@@ -142,25 +159,7 @@ export default function ImageUploadForm() {
       {error && (
         <div className="mt-4 text-red-500">エラー: {error.message}</div>
       )}
-      {data && (
-        <div className="mt-4">
-          <div className="mt-2 space-y-4">
-            <div>
-              <h3 className="text-lg font-semibold">生成された画像：</h3>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={`data:image/jpeg;base64,${data.data.image}`}
-                alt="生成された画像"
-                className="mt-2 h-auto max-w-full rounded-lg shadow-md"
-              />
-            </div>
-            <div>
-              <h3 className="text-lg font-semibold">画像の説明：</h3>
-              <p className="mt-2 p-4">{data.data.text}</p>
-            </div>
-          </div>
-        </div>
-      )}
+      <UploadImageResult data={data} />
     </>
   )
 }
